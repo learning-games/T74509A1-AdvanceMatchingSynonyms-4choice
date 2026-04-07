@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>เกม-จับคู่ รู้คำไวพจน์ (4 ตัวเลือก)</title>
+<title>เกม-จับคู่ รู้คำไวพจน์</title>
 <style>
 
 /* ===== ฟอนต์รวมหน้า ===== */
@@ -167,7 +167,7 @@ body:not(.in-game) #clock {
 }
 
 #landing .brand{
-   width: min(80%, 900px);
+  width: min(80%, 900px);
   display: flex;
   justify-content: center;
 }
@@ -227,36 +227,7 @@ body:not(.in-game) #clock {
 
 @keyframes pulse{ 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.04);opacity:.9} }
 .level-menu{ display:flex; flex-direction:column; gap:14px; width:min(92vw,640px) }
-.levelBtn{
-  width:100%;
-  padding:10px 16px;
-  font-size:clamp(20px,4vw,34px);
-  font-weight:1000;
-  letter-spacing:.2px;
-  border:0;
-  border-radius:14px;
-  color:#fff;
-  background:rgba(0,0,0,.55);
-  box-shadow:0 10px 28px rgba(0,0,0,.35);
-  cursor:pointer;
-  text-align:center;
-  border:1px solid rgba(255,255,255,.18);
-  backdrop-filter:blur(6px);
-}
-
-/* ===== ปุ่ม 2 อันเรียงข้างกัน ===== */
-.menu-row{
-  display:flex;
-  gap:12px;
-  width:100%;
-}
-
-.levelBtn.half{
-  width:50%;
-}
-
-
-background:rgba(0,0,0,.55); box-shadow:0 10px 28px rgba(0,0,0,.35); cursor:pointer; text-align:center; border:1px solid rgba(255,255,255,.18); backdrop-filter:blur(6px) }
+.levelBtn{ width:100%; padding:10px 16px; font-size:clamp(20px,4vw,34px); font-weight:1000; letter-spacing:.2px; border:0; border-radius:14px; color:#fff; background:rgba(0,0,0,.55); box-shadow:0 10px 28px rgba(0,0,0,.35); cursor:pointer; text-align:center; border:1px solid rgba(255,255,255,.18); backdrop-filter:blur(6px) }
 
 /* ===== หน้าเริ่ม/นับถอยหลัง ===== */
 #startScreen{
@@ -323,8 +294,8 @@ background:rgba(0,0,0,.55); box-shadow:0 10px 28px rgba(0,0,0,.35); cursor:point
 /* ===== ตัวเลือกแบบสี่เหลี่ยมมุมมน ===== */
 .option.circle{
   position:absolute;
-  width: var(--c-w, clamp(96px, 28vw, 360px));
-  height: var(--c-h, clamp(64px, 20vw, 240px));
+  width: var(--c-w, clamp(66px, 28vw, 360px));
+  height: var(--c-h, clamp(40px, 19vw, 240px));
 
   border-radius: 40px;              /* 👈 มุมมน */
   border: 6px solid rgba(255,255,255,.25);
@@ -375,6 +346,23 @@ background:rgba(0,0,0,.55); box-shadow:0 10px 28px rgba(0,0,0,.35); cursor:point
   opacity: 0;
 }
 
+
+.option.circle.fade-up {
+  animation: fadeUpSoft 500ms cubic-bezier(.2,.8,.2,1) forwards;
+  opacity: 0;
+}
+
+@keyframes fadeUpSoft {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @keyframes zoomInBounce {
   0%   { transform: scale(0.3); opacity: 0; }
   60%  { transform: scale(1.1); opacity: 1; }  
@@ -383,16 +371,16 @@ background:rgba(0,0,0,.55); box-shadow:0 10px 28px rgba(0,0,0,.35); cursor:point
 
 /* ตัวหนังสือในปุ่ม (ปรับได้ตรงนี้) */
 .option.circle .label {
-  font-size: clamp(10px, 5vw, 80px);
+  font-size: clamp(8px, 4.2vw, 80px);
   font-weight: 900;
-  letter-spacing: .2px;
+  letter-spacing: 0;
   color: #fff;
 
   white-space: normal;
-  word-break: break-word;
   overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 0.9;
   text-align: center;
-  line-height: 0.95;
 
   display: inline-block;
   max-width: 92%;
@@ -785,7 +773,7 @@ background:rgba(0,0,0,.55); box-shadow:0 10px 28px rgba(0,0,0,.35); cursor:point
 <body>
 
 <!-- ==== AR Mirror ==== -->
-<video id="cameraMirror" playsinline muted></video>
+<video id="cameraMirror" playsinline muted></video> 
 <canvas id="camCanvas"></canvas>
 
 <div id="game" aria-label="สนามเกม">
@@ -807,23 +795,10 @@ background:rgba(0,0,0,.55); box-shadow:0 10px 28px rgba(0,0,0,.35); cursor:point
 <div id="landing" role="dialog" aria-modal="true" class="hide">
   <div class="stage">
     <div class="brand"><img src="image/banner2.png" alt="Banner"></div>
-
     <div class="level-menu">
       <button class="levelBtn" data-level="1">ด่านที่ 1 (ระดับง่าย)</button>
       <button class="levelBtn" data-level="2">ด่านที่ 2 (ระดับยาก)</button>
-
-      <!-- แถวปุ่มพิเศษ -->
-      <div class="menu-row">
-        <button class="levelBtn half"
-          onclick="window.location.href='https://learning-games.github.io/T7000A1-AdvanceMatchingSynonyms-welcome/'">
-          รูปแบบเกม
-        </button>
-
-        <button class="levelBtn half" id="guideBtn">
-          กติกาการเล่น 📖
-        </button>
-      </div>
-
+      <button class="levelBtn" id="guideBtn">กติกาการเล่น 📖</button>
     </div>
   </div>
 </div>
@@ -1133,7 +1108,7 @@ function resetGroupMemory(){
 }
 
 /* ===== Decorative Image System ===== */
-const DECOR_IMAGES = [
+const DECOR_IMAGES_RIGHT = [
   "image/choice1.png",
   "image/choice2.png",
   "image/choice3.png",
@@ -1144,10 +1119,21 @@ const DECOR_IMAGES = [
   "image/choice8.png",
 ];
 
+const DECOR_IMAGES_LEFT = [
+  "image/ques1.png",
+  "image/ques2.png",
+  "image/ques3.png",
+  "image/ques4.png",
+  "image/ques5.png",
+  "image/ques6.png",
+  "image/ques7.png",
+  "image/ques8.png",
+];
+
 // ===== Decor Image Memory Cache =====
 const DECOR_CACHE = {};
 
-DECOR_IMAGES.forEach(src=>{
+[...DECOR_IMAGES_RIGHT, ...DECOR_IMAGES_LEFT].forEach(src=>{
   const img = new Image();
   img.src = src;
   DECOR_CACHE[src] = img;
@@ -1157,45 +1143,52 @@ function spawnDecorImages(){
   const options = document.querySelectorAll('.option.circle');
   if(options.length !== 4) return;
 
-  const imgs = shuffle(DECOR_IMAGES).slice(0,4);
+  const leftImg = pick(DECOR_IMAGES_LEFT);
+  const rightImgs = shuffle(DECOR_IMAGES_RIGHT).slice(0,3);
 
-  // 0 = กึ่งกลางรูปทับขอบพอดี
-  const LEFT_X_PCT  = 1.6;
-  const RIGHT_X_PCT = 1.6;
+  // ===== ปรับระยะเยื้องรูปตกแต่ง =====
+  const LEFT_OFFSET_X  = -240;  // ฝั่งซ้าย
+  const LEFT_OFFSET_Y  = -40;
 
-  // ติดลบ = ยกขึ้น
-  const LEFT_Y_PCT  = 0.00;
-  const RIGHT_Y_PCT = 0.00;
+  // ฝั่งขวา: ใช้ "ระยะจากขอบขวา" ของกล่องคำถาม
+  const RIGHT_OFFSET_X = -60;   // ติดลบ = ขยับซ้าย
+  const RIGHT_OFFSET_Y = 0;     // ปรับขึ้น/ลงเพิ่มได้
+const RIGHT_OFFSET_X_PX = 0;
+const RIGHT_OFFSET_X_PCT = 1.60;
+
+  // อ่านตำแหน่ง/ขนาดของกล่องคำถามรอบปัจจุบัน
+  const qRect = qBox.getBoundingClientRect();
+
+  // ระยะห่างของกล่องคำถามจากขอบจอขวา
+  const distanceFromRight = window.innerWidth - qRect.right;
+
+  // สูตรใหม่ของบอส:
+  // ระยะจากขอบขวา + ความกว้างกล่องคำถาม + ขยับซ้ายเล็กน้อย
+  const questionBasedRightX = distanceFromRight + qRect.width + RIGHT_OFFSET_X;
 
   options.forEach((opt, i)=>{
     const rect = opt.getBoundingClientRect();
-
     const img = document.createElement('img');
-    img.src = DECOR_CACHE[imgs[i]].src;
     img.className = 'choice-decor-img';
 
-    const isLeftGroup = (i === 0 || i === 2);
+const isLeftGroup = (i === 0);
+
+if(isLeftGroup){
+  return; // ❌ ไม่สร้างรูปฝั่งซ้าย
+}
+
+img.src = DECOR_CACHE[rightImgs[i - 1]].src;
 
     let centerX, centerY;
 
     if(isLeftGroup){
-      // ฝั่งซ้าย:
-      // ตำแหน่งกล่อง(จากซ้าย) + ความกว้างกล่อง = ขอบขวากล่อง
-      const leftBasedPos = rect.left;
-      const boxRightEdge = leftBasedPos + rect.width;
-
-      centerX = boxRightEdge + (rect.width * LEFT_X_PCT);
-      centerY = (rect.top + rect.height / 2) + (rect.height * LEFT_Y_PCT);
+      // ฝั่งซ้ายคง logic เดิม
+      centerX = rect.left + rect.width / 2 - LEFT_OFFSET_X;
+      centerY = rect.top  + rect.height / 2 + LEFT_OFFSET_Y;
     }else{
-      // ฝั่งขวา:
-      // ตำแหน่งกล่อง(จากขวา)
-      const rightBasedPos = window.innerWidth - rect.right;
 
-      // แปลงกลับมาเป็น "ขอบซ้ายกล่อง" ในระบบพิกัดจากซ้าย
-      const boxLeftEdge = window.innerWidth - (rightBasedPos + rect.width);
-
-      centerX = boxLeftEdge - (rect.width * RIGHT_X_PCT);
-      centerY = (rect.top + rect.height / 2) + (rect.height * RIGHT_Y_PCT);
+centerX = rect.left - (rect.width * RIGHT_OFFSET_X_PCT) + RIGHT_OFFSET_X_PX;
+centerY = rect.top + rect.height / 2 + RIGHT_OFFSET_Y;
     }
 
     img.style.left = centerX + 'px';
@@ -1340,6 +1333,7 @@ function resetState(){
   ended   = true;
   window.ended = ended;
   paused  = false;
+    selected = [];
   clearRoundObjects();
     clearDecorImages();
   clearGameTimer();
@@ -1458,14 +1452,19 @@ function spawnFourCircles(choices){
 const LEFT_MARGIN  = innerWidth * 0.05;
 const RIGHT_MARGIN = innerWidth * 0.05;
 
-const TOP_ROW_Y    = innerHeight * 0.18;
-const BOTTOM_ROW_Y = innerHeight * 0.67;
+// ซ้ายมี 1 ตัว อยู่กึ่งกลางแนวตั้ง
+const LEFT_SINGLE_Y = innerHeight * 0.40;
+
+// ขวามี 3 ตัว เรียงบน-กลาง-ล่าง
+const RIGHT_TOP_Y    = innerHeight * 0.12;
+const RIGHT_MIDDLE_Y = innerHeight * 0.40;
+const RIGHT_BOTTOM_Y = innerHeight * 0.68;
 
 const positions = [
-  { left: LEFT_MARGIN,  top: TOP_ROW_Y },     // ซ้ายบน
-  { right: RIGHT_MARGIN, top: TOP_ROW_Y },    // ขวาบน
-  { left: LEFT_MARGIN,  top: BOTTOM_ROW_Y },  // ซ้ายล่าง
-  { right: RIGHT_MARGIN, top: BOTTOM_ROW_Y }  // ขวาล่าง
+  { left: LEFT_MARGIN,   top: LEFT_SINGLE_Y },   // ซ้าย 1 ตัว
+  { right: RIGHT_MARGIN, top: RIGHT_TOP_Y },     // ขวาบน
+  { right: RIGHT_MARGIN, top: RIGHT_MIDDLE_Y },  // ขวากลาง
+  { right: RIGHT_MARGIN, top: RIGHT_BOTTOM_Y }   // ขวาล่าง
 ];
 
 const COLOR_SET = [
@@ -1480,9 +1479,14 @@ const COLOR_SET = [
 const roundColors = shuffle(COLOR_SET).slice(0, 4);
   choices.forEach((wordObj, index)=>{
 
-    const el = document.createElement('div');
-    el.className = 'option circle in-anim';
-    el.style.setProperty('--choice-color', roundColors[index]);
+const el = document.createElement('div');
+
+// ปุ่มซ้าย (index 0) ไม่ต้องเด้งเข้า
+el.className = (index === 0)
+  ? 'option circle fade-up'
+  : 'option circle in-anim';
+
+el.style.setProperty('--choice-color', roundColors[index]);
     el.dataset.group = wordObj.group;
         el.dataset.isWrong = wordObj.isWrong ? "true" : "false";
         el.dataset.audio = wordObj.audio ? wordObj.audio : "";
@@ -1504,10 +1508,12 @@ requestAnimationFrame(()=>{
   }
 });
 
-    el.appendChild(label);
-    game.appendChild(el);
+el.appendChild(label);
+game.appendChild(el);
+
 el.addEventListener('animationend', ()=>{
   el.classList.remove('in-anim');
+  el.classList.remove('fade-up');
 }, { once:true });
 
 const pos = positions[index];
@@ -1523,6 +1529,41 @@ el.style.top = pos.top + 'px';
     el.addEventListener('click', ()=> handleSelect(el));
   });
   spawnDecorImages(); 
+}
+
+function autoSelectLeftChoiceWhenReady(){
+  if (ended || paused || !awaitingAnswer) return;
+
+  const options = document.querySelectorAll('.option.circle');
+  if (!options.length) return;
+
+  const leftOption = options[0];
+  if (!leftOption) return;
+  if (leftOption.classList.contains('locked')) return;
+
+  const triggerSelect = ()=>{
+    if (ended || paused || !awaitingAnswer) return;
+    if (leftOption.classList.contains('locked')) return;
+
+    // หน่วงเพิ่มอีกนิด ให้ดูเหมือนคนกดจริง
+    setTimeout(()=>{
+      if (ended || paused || !awaitingAnswer) return;
+      if (leftOption.classList.contains('locked')) return;
+      leftOption.click();
+    }, 140);
+  };
+
+  // ถ้ายังมีอนิเมชันเข้าอยู่ ให้รอจนจบก่อน
+  if (
+    leftOption.classList.contains('fade-up') ||
+    leftOption.classList.contains('in-anim')
+  ){
+    leftOption.addEventListener('animationend', triggerSelect, { once:true });
+    return;
+  }
+
+  // ถ้าอนิเมชันจบแล้ว ค่อยหน่วงนิดแล้วเลือก
+  triggerSelect();
 }
 
 function handleSelect(el){
@@ -1784,9 +1825,12 @@ function collectAllGameImages(){
   ].forEach(p => uniq.add(p));
 
   // ===== เพิ่ม preload รูปตกแต่ง choice1-8 =====
-  if (typeof DECOR_IMAGES !== "undefined") {
-    DECOR_IMAGES.forEach(p => uniq.add(p));
-  }
+if (typeof DECOR_IMAGES_RIGHT !== "undefined") {
+  DECOR_IMAGES_RIGHT.forEach(p => uniq.add(p));
+}
+if (typeof DECOR_IMAGES_LEFT !== "undefined") {
+  DECOR_IMAGES_LEFT.forEach(p => uniq.add(p));
+}
 
   if (typeof LEVEL1_BANK !== 'undefined' && Array.isArray(LEVEL1_BANK)) {
     LEVEL1_BANK.forEach(q => q?.img && uniq.add(q.img));
@@ -1818,7 +1862,7 @@ function collectAllGameAudios(){
     "image/question2.mp3"
   ].forEach(p => uniq.add(p));
 
-  // ===== helper: ดึง audio จาก pool ที่ใช้จริง =====
+  // ===== helper: เก็บ audio จาก pool ที่ใช้จริง =====
   const addAudiosFromPool = (pool)=>{
     if (!Array.isArray(pool)) return;
     pool.forEach(item=>{
@@ -1826,10 +1870,14 @@ function collectAllGameAudios(){
     });
   };
 
-  // ===== preload ตาม pool จริง =====
+  // ===== เสียงคำศัพท์จากทุก pool ที่ใช้จริง =====
   addAudiosFromPool(typeof WORD_POOL_LV1 !== "undefined" ? WORD_POOL_LV1 : []);
+  addAudiosFromPool(typeof WORD_POOL_LV1_WRONG !== "undefined" ? WORD_POOL_LV1_WRONG : []);
   addAudiosFromPool(typeof WORD_POOL_LV2 !== "undefined" ? WORD_POOL_LV2 : []);
+  addAudiosFromPool(typeof WORD_POOL_LV2_WRONG !== "undefined" ? WORD_POOL_LV2_WRONG : []);
   addAudiosFromPool(typeof WORD_POOL_LV3 !== "undefined" ? WORD_POOL_LV3 : []);
+  addAudiosFromPool(typeof WORD_POOL_LV3_WRONG !== "undefined" ? WORD_POOL_LV3_WRONG : []);
+
   return [...uniq].map(p => new URL(p, location.href).href);
 }
 
@@ -1867,14 +1915,9 @@ window.addEventListener('load', ()=> { runGlobalPreload(); });
 const NEEDS_BANK = [];
 const LEVEL3_BANK = [];
 
-/* ===== WORD MATCHING POOL ===== */
-const WORD_POOL_LV1 = [];
-
-/* ===== LEVEL 1 WRONG POOL พ้องรูปผิด ===== */
-const WORD_POOL_LV1_WRONG = [];
-
-/* ===== LEVEL 2 POOL พ้องเสียง===== */
-const WORD_POOL_LV2 = [
+/* ===== ไวพจน์ ชุด 1 ===== */
+const WORD_POOL_LV1 = [
+// ===== group 1 =====
 { word: "ดวงอาทิตย์", group: 1, audio: "audio1/1sn1.mp3" },
 { word: "สุริยา", group: 1, audio: "audio1/1sn2.mp3" },
 { word: "ตะวัน", group: 1, audio: "audio1/1sn3.mp3" },
@@ -2000,11 +2043,13 @@ const WORD_POOL_LV2 = [
 { word: "ปทุม", group: 30, audio: "audio1/1sn94.mp3" },
 ];
 
-/* ===== LEVEL 2 WRONG POOL พ้องเสียง ผิด ===== */
-const WORD_POOL_LV2_WRONG  = [];
 
-/* ===== LEVEL 3 POOL คำพ้องความหมาย ===== */
-const WORD_POOL_LV3 = [
+
+/* ===== LEVEL 1 WRONG POOL คล้องจอก1 พยางค์ ผิด ===== */
+const WORD_POOL_LV1_WRONG = [];
+
+/* ===== LEVEL 2 POOL พ้องเสียง===== */
+const WORD_POOL_LV2 = [
   { word: "ดวงอาทิตย์", group: 1, audio: "audio2/2sn1.mp3" },
   { word: "ทินกร", group: 1, audio: "audio2/2sn2.mp3" },
   { word: "สุริยา", group: 1, audio: "audio2/2sn3.mp3" },
@@ -2221,67 +2266,14 @@ const WORD_POOL_LV3 = [
   { word: "มฆวาน", group: 32, audio: "audio3/2sn184.mp3" }
 ];
 
+/* ===== LEVEL 2 WRONG POOL คล้องจาก 2 ผิด ===== */
+const WORD_POOL_LV2_WRONG  = [];
+
+/* ===== LEVEL 3 POOL คล้องจอง 3 ===== */
+const WORD_POOL_LV3 = [];
+
 /* ===== LEVEL 3 WRONG POOL ===== */
-const WORD_POOL_LV3_WRONG = [
-{ word: "ฟ้า", group: 1, audio: "audio4/pk1.mp3" },
-{ word: "นภา", group: 1, audio: "audio4/pk2.mp3" },
-{ word: "เวหา", group: 1, audio: "audio4/pk3.mp3" },
-{ word: "ฝน", group: 2, audio: "audio4/pk4.mp3" },
-{ word: "พรรษ", group: 2, audio: "audio4/pk5.mp3" },
-{ word: "พิรุณ", group: 2, audio: "audio4/pk6.mp3" },
-{ word: "ป่า", group: 3, audio: "audio4/pk7.mp3" },
-{ word: "ไพร", group: 3, audio: "audio4/pk8.mp3" },
-{ word: "วนา", group: 3, audio: "audio4/pk9.mp3" },
-{ word: "อรัญ", group: 3, audio: "audio4/pk10.mp3" },
-{ word: "น้ำ", group: 4, audio: "audio4/pk11.mp3" },
-{ word: "วารี", group: 4, audio: "audio4/pk12.mp3" },
-{ word: "คงคา", group: 4, audio: "audio4/pk13.mp3" },
-{ word: "นที", group: 4, audio: "audio4/pk14.mp3" },
-{ word: "ดวงอาทิตย์", group: 5, audio: "audio4/pk15.mp3" },
-{ word: "ตะวัน", group: 5, audio: "audio4/pk16.mp3" },
-{ word: "สุริยะ", group: 5, audio: "audio4/pk17.mp3" },
-{ word: "ไฟ", group: 6, audio: "audio4/pk18.mp3" },
-{ word: "เพลิง", group: 6, audio: "audio4/pk19.mp3" },
-{ word: "อัคคี", group: 6, audio: "audio4/pk20.mp3" },
-{ word: "ภูเขา", group: 7, audio: "audio4/pk21.mp3" },
-{ word: "บรรพต", group: 7, audio: "audio4/pk22.mp3" },
-{ word: "สิงขร", group: 7, audio: "audio4/pk23.mp3" },
-{ word: "ลม", group: 8, audio: "audio4/pk24.mp3" },
-{ word: "วายุ", group: 8, audio: "audio4/pk25.mp3" },
-{ word: "วาตะ", group: 8, audio: "audio4/pk26.mp3" },
-{ word: "พ่อ", group: 9, audio: "audio4/pk27.mp3" },
-{ word: "บิดา", group: 9, audio: "audio4/pk28.mp3" },
-{ word: "แม่", group: 10, audio: "audio4/pk29.mp3" },
-{ word: "มารดา", group: 10, audio: "audio4/pk30.mp3" },
-{ word: "ดวงดาว", group: 11, audio: "audio4/pk31.mp3" },
-{ word: "ดารา", group: 11, audio: "audio4/pk32.mp3" },
-{ word: "พระจันทร์", group: 12, audio: "audio4/pk33.mp3" },
-{ word: "เดือน", group: 12, audio: "audio4/pk34.mp3" },
-{ word: "จันทรา", group: 12, audio: "audio4/pk35.mp3" },
-{ word: "แผ่นดิน", group: 13, audio: "audio4/pk36.mp3" },
-{ word: "ปฐพี", group: 13, audio: "audio4/pk37.mp3" },
-{ word: "พสุธา", group: 13, audio: "audio4/pk38.mp3" },
-{ word: "ดอกไม้", group: 14, audio: "audio4/pk39.mp3" },
-{ word: "บุปผา", group: 14, audio: "audio4/pk40.mp3" },
-{ word: "มาลี", group: 14, audio: "audio4/pk41.mp3" },
-{ word: "หัวใจ", group: 15, audio: "audio4/pk42.mp3" },
-{ word: "ฤดี", group: 15, audio: "audio4/pk43.mp3" },
-{ word: "หฤทัย", group: 15, audio: "audio4/pk44.mp3" },
-{ word: "ผู้หญิง", group: 16, audio: "audio4/pk45.mp3" },
-{ word: "นารี", group: 16, audio: "audio4/pk46.mp3" },
-{ word: "สตรี", group: 16, audio: "audio4/pk47.mp3" },
-{ word: "คำพูด", group: 17, audio: "audio4/pk48.mp3" },
-{ word: "วาจา", group: 17, audio: "audio4/pk49.mp3" },
-{ word: "วจี", group: 17, audio: "audio4/pk50.mp3" },
-{ word: "ปลา", group: 18, audio: "audio4/pk51.mp3" },
-{ word: "มัจฉา", group: 18, audio: "audio4/pk52.mp3" },
-{ word: "ดอกบัว", group: 19, audio: "audio4/pk53.mp3" },
-{ word: "ปทุม", group: 19, audio: "audio4/pk54.mp3" },
-{ word: "อุบล", group: 19, audio: "audio4/pk55.mp3" },
-{ word: "เมือง", group: 20, audio: "audio4/pk56.mp3" },
-{ word: "นคร", group: 20, audio: "audio4/pk57.mp3" },
-{ word: "ธานี", group: 20, audio: "audio4/pk58.mp3" },
-];
+const WORD_POOL_LV3_WRONG = [];
 
 (function attachLevel3Images(){
   for (const q of LEVEL3_BANK){
@@ -2289,6 +2281,7 @@ const WORD_POOL_LV3_WRONG = [
     if (img) q.img = img;
   }
 })();
+
 
 function drawQuestion(){
 
@@ -2308,63 +2301,48 @@ function drawQuestion(){
   const groups = [...new Set(activePool.map(w => w.group))];
   const correctGroup = pickGroupNoRepeat(groups, window.currentLevel);
 
-  // ===== 2) คำถูก: ต้องมี "คำแรกของกลุ่ม" อยู่เสมอ =====
+  // ===== 2) เลือกคำถูก 2 คำ จาก activePool =====
+  let correctWords = [];
+
   const groupWords = activePool.filter(w => w.group === correctGroup);
 
-  const firstCorrect = groupWords[0];              // คำแรกของกลุ่ม
-  const otherCorrectPool = shuffle(groupWords.slice(1)); // คำอื่นที่ไม่ใช่คำแรก
-  const secondCorrect = otherCorrectPool[0] || groupWords[1] || firstCorrect;
+  // ทุกด่าน: ให้คำถูกตัวแรกของกลุ่มอยู่ซ้ายเสมอ
+  const firstWord = groupWords[0];
+  const others = shuffle(groupWords.slice(1));
 
-  const correctWords = [firstCorrect, secondCorrect];
+  // กันกรณีบางกลุ่มมีคำเดียว
+  const secondWord = others[0] || groupWords[1] || firstWord;
 
-  // ===== 3) คำหลอก:
-  // - มาจาก activePool เดิม
-  // - ต้องคนละกลุ่มกับคำถูก
-  // - 2 คำหลอกห้ามมาจากกลุ่มเดียวกันเด็ดขาด
-  // - คำหลอก 1 = คำแรกของกลุ่ม
-  // - คำหลอก 2 = คำอื่นที่ไม่ใช่คำแรกของอีกกลุ่มหนึ่ง
-  const wrongGroups = shuffle(groups.filter(g => g !== correctGroup));
+  correctWords = [firstWord, secondWord];
 
-  // กลุ่มสำหรับ "คำแรกของกลุ่ม"
-  let wrongGroupA = null;
+// ===== 3) เลือกคำหลอกจาก activePool แต่ต้องคนละกลุ่ม + ไม่เอาคำแรกของกลุ่ม =====
+let wrongWords = shuffle(
+  activePool.filter(w => {
 
-  // กลุ่มสำหรับ "คำที่ไม่ใช่คำแรกของกลุ่ม"
-  let wrongGroupB = null;
+    if (w.group === correctGroup) return false;
 
-  for (const g of wrongGroups){
-    const words = activePool.filter(w => w.group === g);
-    if (!wrongGroupA && words.length >= 1){
-      wrongGroupA = g;
-      continue;
-    }
+    if (correctWords.some(c => c.word === w.word && c.group === w.group)) return false;
+
+    const groupFirst = activePool.find(x => x.group === w.group);
+    if (groupFirst && groupFirst.word === w.word) return false;
+
+    return true;
+  })
+).slice(0, 2);
+
+  // กันกรณีคำหลอกไม่พอ
+  if (wrongWords.length < 2) {
+    const extraWords = shuffle(
+      activePool.filter(w =>
+        !wrongWords.includes(w) &&
+        !correctWords.includes(w)
+      )
+    ).slice(0, 2 - wrongWords.length);
+
+    wrongWords = [...wrongWords, ...extraWords];
   }
 
-  for (const g of wrongGroups){
-    if (g === wrongGroupA) continue;
-    const words = activePool.filter(w => w.group === g);
-    if (words.length >= 2){
-      wrongGroupB = g;
-      break;
-    }
-  }
-
-  // fallback กันพัง ถ้าลำดับด้านบนหาไม่ได้พอ
-  if (wrongGroupA === null || wrongGroupB === null){
-    const altGroups = wrongGroups.filter(g => activePool.filter(w => w.group === g).length >= 2);
-
-    if (wrongGroupA === null) wrongGroupA = altGroups[0] ?? wrongGroups[0];
-    if (wrongGroupB === null) wrongGroupB = altGroups.find(g => g !== wrongGroupA) ?? wrongGroups.find(g => g !== wrongGroupA);
-  }
-
-  const wrongGroupAWords = activePool.filter(w => w.group === wrongGroupA);
-  const wrongGroupBWords = activePool.filter(w => w.group === wrongGroupB);
-
-  const wrongWord1 = wrongGroupAWords[0]; // คำแรกของกลุ่ม
-  const wrongWord2 = shuffle(wrongGroupBWords.slice(1))[0] || wrongGroupBWords[1] || wrongGroupBWords[0];
-
-  const wrongWords = [wrongWord1, wrongWord2];
-
-  // ===== 4) ติดป้าย =====
+  // ===== 4) รวมทั้งหมด =====
   const taggedCorrect = correctWords.map(w => ({
     ...w,
     isWrong: false
@@ -2389,7 +2367,7 @@ function drawQuestion(){
     [rightChoices[i], rightChoices[j]] = [rightChoices[j], rightChoices[i]];
   }
 
-  const allChoices = [
+  let allChoices = [
     leftChoice,
     ...rightChoices
   ];
@@ -2399,10 +2377,13 @@ function drawQuestion(){
   };
 }
 
+
+
 function nextRound(){
   if (ended) return;
 
   clearRoundObjects();
+    selected = [];
   awaitingAnswer = false;
   stopTimebar();
   qBox.textContent = '';
@@ -2421,7 +2402,10 @@ setTimeout(()=>{
     }
   }catch(_){}
 
-  awaitingAnswer = true;
+awaitingAnswer = true;
+
+// รอให้ปุ่มเข้าจบ + หน่วงสั้น ๆ ก่อนเลือกอัตโนมัติ
+autoSelectLeftChoiceWhenReady();
 
 }, OPT_IN_MS);
 }
@@ -2454,6 +2438,7 @@ async function startGame(){
     ended = true;
         window.ended = ended; 
     running = false;
+        selected = [];
     clearGameTimer();
     stopClockUI();
 
@@ -2789,18 +2774,18 @@ if (countdownEl){
 function getMissionTitle(lv){
 
   if(lv === 1){
-    return "ภารกิจ : จับคู่คำไวพจน์ให้ถูกต้อง";
+    return "ภารกิจ : เลือกคำที่คล้องจองกับคำที่กำหนด";
   }
 
   if(lv === 2){
-    return "ภารกิจ : จับคู่คำไวพจน์ให้ถูกต้อง";
+    return "ภารกิจ : เลือกคำที่คล้องจองกับคำที่กำหนด";
   }
 
   if(lv === 3){
-    return "ภารกิจ : จับคู่คำไวพจน์ให้ถูกต้อง";
+    return "ภารกิจ : เลือกคำที่คล้องจองกับคำที่กำหนด";
   }
 
-  return "ภารกิจ : จับคู่คำไวพจน์ให้ถูกต้อง";
+  return "ภารกิจ : เลือกคำที่คล้องจองกับคำที่กำหนด";
 }
     st.textContent = getMissionTitle(lv);
 
